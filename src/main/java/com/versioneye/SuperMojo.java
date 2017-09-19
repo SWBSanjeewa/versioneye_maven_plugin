@@ -59,7 +59,10 @@ public class SuperMojo extends AbstractMojo {
 
     @Parameter( property = "baseUrl", defaultValue = "https://www.versioneye.com" )
     protected String baseUrl;
-
+    
+    @Parameter( property = "appUrl", defaultValue = "https://www.versioneye.com" )
+    protected String appUrl;
+    
     @Parameter( property = "apiPath", defaultValue = "/api/v2" )
     protected String apiPath;
 
@@ -125,6 +128,9 @@ public class SuperMojo extends AbstractMojo {
 
     @Parameter( property = "transitiveDependencies" )
     protected boolean transitiveDependencies = false;
+    
+    @Parameter( property = "skipGroupIds" )
+    protected String skipGroupIds = null;
 
     protected Properties properties = null;     // Properties in src/main/resources
     protected Properties homeProperties = null; // Properties in ~/.m2/
@@ -190,6 +196,13 @@ public class SuperMojo extends AbstractMojo {
         }
 
         return baseUrl;
+    }
+    
+    protected String fetchAppUrl() throws Exception {
+        if (appUrl != null && !appUrl.isEmpty() ){
+            return appUrl;
+        }
+        return fetchBaseUrl();
     }
 
 
